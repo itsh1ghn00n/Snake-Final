@@ -15,7 +15,7 @@ public:
 
     int getLen();
 
-    char getDir(); //TODO I need a function that will give me the 
+    char getDir(); //TODO I need a function that will give me the
     
     vector<pair<int, int>> getPos();
     // Gets the body at index's x

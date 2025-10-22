@@ -38,7 +38,7 @@ bool board::getAppleVal(int aCurrentAppleRow, int aCurrentAppleCol,Player curren
   //returns true if apple is at curent position false if not
   //get players next pos after taking the input from the user.
   //make check with the current apple row and col to then return true or false (true apple is in users path or false it is not)
-  if(currentPlayer.getDir() ==
+
 }
 void board::setCol(int newCol){//setter for col same as row
   this->col = newCol;
@@ -59,4 +59,25 @@ void board::setBoardVal(int r, int c, char val) {
 void board::setSpace(int aRow, int aCol){//sets the given position
 
 }
+void board::fillBoard(vector<vector<char>> aGrid){
+    for (int i = 0; i < row; i++) {
+      for (int j = 0; j < col; j++) {
+        aGrid[i][j] = '0';
+      }
+    }
+  }
+void board::printBoard(vector<vector<char>> aGrid){
+    char letterVal = 'A';
+    cout << " "; //This sets the spacing to the correct size
+    for (int i = 0; i < row; i++) {
+      cout << '[' << letterVal << ']';
+      letterVal += 1;
+    }
+    for (int i = 0; i < row; i++) {
+      cout << '\n' << i + 1;
+      for (int j = 0; j < col; j++) {
+        cout << '[' << aGrid[i][j] << ']';
+      }   // This loop is responsible for printing the value that is currently inside of the boards.
+    }   // This loop is used to indent the values
+  }
 

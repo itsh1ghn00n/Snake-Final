@@ -5,6 +5,8 @@
 #define BOARDCLASS_H
 #include <string>
 #include <sstream>
+#include <stdexcept>
+#include <iostream>
 #include "Player.h"
 
 class board{
@@ -30,6 +32,8 @@ class board{
     void setCurrentAppleCol(int);
     void setSpace(int, int); //sets the current position
     void setBoardVal(int, int, char);
+    void fillBoard(vector<vector<char>>);
+    void printBoard(vector<vector<char>>);
   };
 
 

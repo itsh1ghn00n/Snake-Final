@@ -9,10 +9,11 @@
 
 class board{
   private:
-  int col;
-  int row;
-  int currentAppleRow;
-  int currentAppleCol;
+  int col; //col ammount
+  int row; //row ammount
+  int currentAppleRow; //current apple row position
+  int currentAppleCol; //current apple col position
+  vector<vector<char>> grid; //main grid for the game
   public:
     board();
     board(int col, int row);
@@ -21,13 +22,14 @@ class board{
     int getRow(); //getter for row
     int getCurrentAppleRow();
     int getCurrentAppleCol();
+    int getSpace(); //returns current positon
+    bool getAppleVal(int, int, Player); //returns true if apple is at curent position false if not
     void setCol(int); //setter for col
     void setRow(int); //setter for row
     void setCurrentAppleRow(int);
     void setCurrentAppleCol(int);
-    int getSpace(); //returns current positon
     void setSpace(int, int); //sets the current position
-    bool getAppleVal(int, int); //returns true if apple is at curent position false if not
+    void setBoardVal(int, int, char);
   };
 
 

@@ -5,10 +5,7 @@
 #include "Board.h"
 using namespace std;
 
-void Board::setBoardVal(int r, int c, char val) {
-    if (r >= 0 && r < row && c >= 0 && c < col)
-        grid[r][c] = val;
-}
+
 
 void Board::printBoard() const {
     // Print each col

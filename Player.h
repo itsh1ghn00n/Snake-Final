@@ -1,33 +1,37 @@
 #ifndef Player_h
 #define Player_h
 #include <vector>
-using namespace std;
 
 class Player {
 private:
     int length;
     char direction;
-    vector<pair<int, int>> body;
+    std::vector<std::pair<int, int>> body;
     // "W" "A" "S" "D"
 public:
     // Sets pos to (startx, starty) length = (len), and dir = ("D")
-    Player(int startx, int starty, int len);
+    Player(int startx, int starty, int len) {
+        length = len;
+        direction = 'D';
 
-    int getLen();
+        for (int i = 0; i < length; ++i) {
+            body.push_back({startx, starty}); // if len is 3 we make 3 copies in the vector of this pos
+        }
+    }
 
-    char getDir(); //TODO I need a function that will give me the 
-    
-    vector<pair<int, int>> getPos();
-    // Gets the body at index's x
+    // Getters
+    int getLen() const;
+    char getDir() const;
     int getX(int index);
-    // Gets the body at index's y 
     int getY(int index);
-    // Change the direction
-    void setDir(char ); //will be new dir for the char
-    // Move the player's position
+    std::pair<int, int> getPos(int index);
+
+    // Setters / Actions
+    void setLength(int val);
+    void setDir(char newDir);
     void move();
-    // Add's to the end of the vector
     void grow();
+
 };
 
 #endif

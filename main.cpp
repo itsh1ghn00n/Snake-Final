@@ -2,6 +2,8 @@
 #include <vector>
 #include "Board.h"
 #include "Player.h"
+#include <chrono> // Temp until we port to arduino
+#include <thread> // ^
 using namespace std;
 //this will be the main runner for the game
 
@@ -16,11 +18,17 @@ bool checkApple(int row, int col) {
     return true;
 }
 
+void updateBoard(Player player, Board gameBoard) {
+    for (int i = 0;i < player.getLen() ; i++) {
+        gameBoard.setBoardVal(player.getX(i), player.getY(i), '1');
+    }
+}
+
 int main() {
     int row = 7;
     int col = 7;
     Board gameBoard(row, col);
-    Player player(3,3, 3);
+    Player player(3, 3, 3);
 
     bool winCon = false;
     bool winCond = false;
@@ -29,23 +37,25 @@ int main() {
     int winLength = row * col;
 
     gameBoard.printBoard();
-    gameBoard.setBoardVal(2, 3, '1');
+    //gameBoard.setBoardVal(2, 3, '1');
 
     // Check for apple at pos (2, 3)
     if (gameBoard.getBoardVal(2, 3) == '*');
     // do something
 
-    while (winCon == false) {
-        // wincon
+    while (!winCon) {
+        // clear the screen
+        gameBoard.printBoard(); // then update
+        updateBoard(player, gameBoard);
+        // Game Runs
+        //player.setDir('D'); Need to add a way to grab input and we should be solid
+        player.move();
         if (row * col == player.getLen()) {
+            // Player Wins
             winCon = true;
-            while (winCond == false) {
-
-                if (winLength == player.getLen()) {
-                    winCond = true;
-                }
-            }
+            cout << "You win!" << endl;
             return 0;
         }
+        this_thread::sleep_for(chrono::milliseconds(200));
     }
 }

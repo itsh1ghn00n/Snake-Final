@@ -25,6 +25,7 @@ public:
         return '?'; // Error val
     }
 
+    // Sets a value: val at row, col
     void setBoardVal(int row, int col, char val);
 
     void printBoard() const; 

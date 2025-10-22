@@ -1,22 +1,10 @@
 #include <iostream>
-#include <vector>
 #include "Board.h"
-#include "Player.h"
+#include "Player.h" // includes the vector class
 #include <chrono> // Temp until we port to arduino
 #include <thread> // ^
 using namespace std;
 //this will be the main runner for the game
-
-bool checkApple(int row, int col) {
-    //if (board[row][col] == '*') {
-        //return true;
-        // Apple here
-    //} else {
-        //return false;
-        // No Apple
-    //}
-    return true;
-}
 
 void updateBoard(Player player, Board gameBoard) {
     for (int i = 0;i < player.getLen() ; i++) {
@@ -25,12 +13,11 @@ void updateBoard(Player player, Board gameBoard) {
 }
 
 int main() {
-    int row = 7;
-    int col = 7;
+    int row = 5;
+    int col = 5;
     Board gameBoard(row, col);
     Player player(3, 3, 3);
 
-    bool winCon = false;
     bool winCond = false;
     int playerXval = 0, playerYval = 0; //this is setting the Y and X cords for the game board
     char playerLastInput = 'd'; //this will keep track of players previous input starting going right
@@ -43,7 +30,7 @@ int main() {
     if (gameBoard.getBoardVal(2, 3) == '*');
     // do something
 
-    while (!winCon) {
+    while (winCond == false) {
         // clear the screen
         gameBoard.printBoard(); // then update
         updateBoard(player, gameBoard);
@@ -52,7 +39,7 @@ int main() {
         player.move();
         if (row * col == player.getLen()) {
             // Player Wins
-            winCon = true;
+            winCond = true;
             cout << "You win!" << endl;
             return 0;
         }

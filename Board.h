@@ -1,11 +1,10 @@
 //
 //  Board.h
 
-#include <iostream>
-using namespace std;
-#include <vector>
 #ifndef Board_h
 #define Board_h
+#include <vector>
+using namespace std;
 
 class Board {
 private:   

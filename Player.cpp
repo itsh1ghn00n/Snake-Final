@@ -1,9 +1,7 @@
 //
 // Player.cpp
-
 #include <iostream>
 #include "Player.h"
-using namespace std;
 
 Player::Player(int startRow, int startCol, int len) : length(len), direction('D'){
     // initialize the snake body at startRow, and startCol
@@ -11,7 +9,6 @@ Player::Player(int startRow, int startCol, int len) : length(len), direction('D'
         body.push_back({startRow, startCol}); // if len is 3 we make 3 copies in the vector of this pos
     }
 }
-
 void Player::setDir(char dir) {
     if ((direction == 'W' && dir == 'S') || (direction == 'S' && dir == 'W')) {
         return; // If we try and switch to an opposite direction, return
@@ -49,3 +46,6 @@ void Player::grow() {
     body.push_back(body.back());
     length++;
 }
+
+// TODO ANDREW COMMENT [maybe consider making the check for the apple in the next col in here reason being that I can use
+// TODO the func to then check with the boards apple checker to see if the next pos is a apple]

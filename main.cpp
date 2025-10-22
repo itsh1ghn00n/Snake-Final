@@ -21,9 +21,13 @@ int main() {
     Board gameBoard(row, col);
 
     bool winCon = false;
+    fillBoard(board);
+    printBoard(board);
+    bool winCond = false;
     int playerLen = 1;
     int playerXval = 0, playerYval = 0; //this is setting the Y and X cords for the game board
     char playerLastInput = 'd'; //this will keep track of players previous input starting going right
+    int winLength = row * col;
 
     gameBoard.printBoard();
     gameBoard.setBoardVal(2, 3, '1');
@@ -34,10 +38,21 @@ int main() {
 
     while (winCon == false) {
         // wincon
-        //if (row * col == playerLen) {
-            //winCon = true;
-        //}
-    }
-    return 0;
+        if (row * col == playerLen) {
+            winCon = true;
+            while (winCond == false) {
 
+
+
+
+
+
+
+                if (winLength == playerLen) {
+                    winCond = true;
+                }
+            }
+            return 0;
+        }
+    }
 }

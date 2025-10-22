@@ -3,9 +3,7 @@
 //
 #ifndef BOARDCLASS_H
 #define BOARDCLASS_H
-#include <string>
-#include <sstream>
-#include <stdexcept>
+#include <vector>
 #include <iostream>
 #include "Player.h"
 
@@ -15,10 +13,9 @@ class board{
   int row; //row ammount
   int currentAppleRow; //current apple row position
   int currentAppleCol; //current apple col position
-  vector<vector<char>> grid; //main grid for the game
+  std::vector<std::vector<char>> grid; //main grid for the game
   public:
-    board();
-    board(int col, int row);
+    board(int col, int row) : col(col), row(row), grid(col, std::vector<char>(row, '0')) {}
     board(int col, int row, int currentAppleRow, int currentAppleCol);
     int getCol(); //getter for col
     int getRow(); //getter for row
@@ -32,8 +29,7 @@ class board{
     void setCurrentAppleCol(int);
     void setSpace(int, int); //sets the current position
     void setBoardVal(int, int, char);
-    void fillBoard(vector<vector<char>>);
-    void printBoard(vector<vector<char>>);
+    void printBoard();
   };
 
 

@@ -1,15 +1,11 @@
 //
-// Created by andre on 10/22/2025.
+// Created by Andrew on 10/22/2025.
 //
 #include "BoardClass.h"
 
-board::board(){
-  }
-board::board(int col, int row) { //initializer with only  col and row dimensions
-    this->col = col;
-    this->row = row; //setting both vals to a passed int which will be defined in main program
-}
-board::board(int col, int row, int currentAppleRow, int currentAppleCol) {
+using namespace std;
+
+board::board(int col, int row, int currentAppleRow, int currentAppleCol) : col(col), row(row), grid(col, std::vector<char>(row, '0')) {
   this->col = col;
   this->row = row;
   this->currentAppleRow = currentAppleRow;
@@ -38,7 +34,7 @@ bool board::getAppleVal(int aCurrentAppleRow, int aCurrentAppleCol,Player curren
   //returns true if apple is at curent position false if not
   //get players next pos after taking the input from the user.
   //make check with the current apple row and col to then return true or false (true apple is in users path or false it is not)
-
+  return false;
 }
 void board::setCol(int newCol){//setter for col same as row
   this->col = newCol;
@@ -59,14 +55,7 @@ void board::setBoardVal(int r, int c, char val) {
 void board::setSpace(int aRow, int aCol){//sets the given position
 
 }
-void board::fillBoard(vector<vector<char>> aGrid){
-    for (int i = 0; i < row; i++) {
-      for (int j = 0; j < col; j++) {
-        aGrid[i][j] = '0';
-      }
-    }
-  }
-void board::printBoard(vector<vector<char>> aGrid){
+void board::printBoard(){
     char letterVal = 'A';
     cout << " "; //This sets the spacing to the correct size
     for (int i = 0; i < row; i++) {
@@ -76,7 +65,7 @@ void board::printBoard(vector<vector<char>> aGrid){
     for (int i = 0; i < row; i++) {
       cout << '\n' << i + 1;
       for (int j = 0; j < col; j++) {
-        cout << '[' << aGrid[i][j] << ']';
+        cout << '[' << grid[i][j] << ']';
       }   // This loop is responsible for printing the value that is currently inside of the boards.
     }   // This loop is used to indent the values
   }

@@ -24,17 +24,20 @@ int main() {
     bool winCon = false;
     int winLength = row * col;
 
-    cout << "Length: " << player.getLen() << endl;
-
-    updateBoard(player, gameBoard);
     gameBoard.printBoard();
 
-    player.move();
-    player.grow();
-    cout << "Length: " << player.getLen() << endl;
+    //cout << "Length: " << player.getLen() << endl;
 
-    updateBoard(player, gameBoard);
-    gameBoard.printBoard();
+    //updateBoard(player, gameBoard);
+    //gameBoard.printBoard();
+
+    //player.move();
+    //player.grow();
+    //cout << "Length: " << player.getLen() << endl;
+
+    //updateBoard(player, gameBoard);
+    //gameBoard.printBoard();
+
     // Check for apple at pos (2, 3)
     //if (gameBoard.getBoardVal(2, 3) == '*');
     // do something

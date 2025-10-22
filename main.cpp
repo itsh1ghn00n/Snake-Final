@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include "Board.h"
+#include "Player.h"
 using namespace std;
 //this will be the main runner for the game
 
@@ -19,12 +20,10 @@ int main() {
     int row = 7;
     int col = 7;
     Board gameBoard(row, col);
+    Player player(3,3, 3);
 
     bool winCon = false;
-    fillBoard(board);
-    printBoard(board);
     bool winCond = false;
-    int playerLen = 1;
     int playerXval = 0, playerYval = 0; //this is setting the Y and X cords for the game board
     char playerLastInput = 'd'; //this will keep track of players previous input starting going right
     int winLength = row * col;
@@ -38,17 +37,11 @@ int main() {
 
     while (winCon == false) {
         // wincon
-        if (row * col == playerLen) {
+        if (row * col == player.getLen()) {
             winCon = true;
             while (winCond == false) {
 
-
-
-
-
-
-
-                if (winLength == playerLen) {
+                if (winLength == player.getLen()) {
                     winCond = true;
                 }
             }

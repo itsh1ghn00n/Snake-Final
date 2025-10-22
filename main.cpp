@@ -8,10 +8,10 @@
 using namespace std;
 //this will be the main runner for the game
 
-void updateBoard(Player player, board gameBoard) {
+void updateBoard(Player& player, board& gameBoard) {
     for (int i = 0;i < player.getLen() ; i++) {
-        cout << "Section at: (" << player.getX(0) << "," << player.getY(0) << ")" << endl;
-        gameBoard.setBoardVal(player.getX(i), player.getY(i), 1);
+        cout << "Section at: (" << player.getX(i) << "," << player.getY(i) << ")" << endl;
+        gameBoard.setBoardVal(player.getX(i), player.getY(i), '1');
     }
 }
 
@@ -24,19 +24,17 @@ int main() {
     bool winCon = false;
     int winLength = row * col;
 
+    cout << "Length: " << player.getLen() << endl;
+
+    updateBoard(player, gameBoard);
     gameBoard.printBoard();
 
-    //cout << "Length: " << player.getLen() << endl;
+    player.move();
+    player.grow();
+    cout << "Length: " << player.getLen() << endl;
 
-    //updateBoard(player, gameBoard);
-    //gameBoard.printBoard();
-
-    //player.move();
-    //player.grow();
-    //cout << "Length: " << player.getLen() << endl;
-
-    //updateBoard(player, gameBoard);
-    //gameBoard.printBoard();
+    updateBoard(player, gameBoard);
+    gameBoard.printBoard();
 
     // Check for apple at pos (2, 3)
     //if (gameBoard.getBoardVal(2, 3) == '*');

@@ -10,12 +10,10 @@ private:
     // "W" "A" "S" "D"
 public:
     // Sets pos to (startx, starty) length = (len), and dir = ("D")
-    Player(int startx, int starty, int len) {
-        length = len;
-        direction = 'D';
+    Player(int starty, int startx, int len) : length(len), direction('D') {
 
         for (int i = 0; i < length; ++i) {
-            body.push_back({startx, starty}); // if len is 3 we make 3 copies in the vector of this pos
+            body.push_back({starty, startx}); // if len is 3 we make 3 copies in the vector of this pos
         }
     }
 

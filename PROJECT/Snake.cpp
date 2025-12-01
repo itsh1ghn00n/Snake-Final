@@ -18,8 +18,8 @@ void Snake::move(int dirX, int dirY) {
   body[0].y += dirY;
 }
 
-void Snake::grow() {
-  if (length < MAX_SIZE) {
+void Snake::grow(int amount) {
+  for (int i = 0; i < amount && length < MAX_SIZE; i++) {
     body[length] = body[length - 1];
     length++;
   }
@@ -31,4 +31,9 @@ bool Snake::isOnBody(int x, int y) const {
       return true;
   }
   return false;
+}
+
+void Snake::setLength(int newLen) {
+  body[length] = body[length - newLen];
+  length = newLen;
 }

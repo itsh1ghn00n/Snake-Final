@@ -5,12 +5,16 @@ Game::Game(int gridW, int gridH)
     running(false), dirX(1), dirY(0), inputDirX(0), inputDirY(0) {}
 
 void Game::start() {
+  dirX = 1;
+  dirY = 0;
   snake.init(4);
   apple.spawn(gridW, gridH, snake);
   running = true;
 }
 
 void Game::reset() {
+  dirX = 1;
+  dirY = 0;
   snake.init(4);
   apple.spawn(gridW, gridH, snake);
   running = false;
@@ -51,7 +55,7 @@ void Game::update(int inputDirX, int inputDirY) {
 
   // apple collision
   if (snake.getHead().x == apple.getPos().x && snake.getHead().y == apple.getPos().y) {
-    snake.grow();
+    snake.grow(1);
     apple.spawn(gridW, gridH, snake);
   }
 }

@@ -34,7 +34,6 @@ void Snake::move(int dx, int dy, uint8_t grid[26][24])
   // if not growing, remove old tail
   if (growCount > 0) {
     growCount--;
-    length++;
   }
   else {
     prevTail = tail;
@@ -48,6 +47,7 @@ void Snake::move(int dx, int dy, uint8_t grid[26][24])
 
 void Snake::grow(int amount)
 {
+    length += amount;
     growCount += amount;
 }
 
@@ -68,5 +68,16 @@ void Snake::updateTail(uint8_t grid[26][24])
         case BODY_DOWN:  tail.y++; break;
         case BODY_UP:    tail.y--; break;
     }
+}
+
+Point Snake::getNeck(uint8_t grid[26][24]) const {
+    uint8_t code = grid[head.x][head.y];
+    switch (code) {
+      case BODY_RIGHT: return { head.x - 1, head.y };
+      case BODY_LEFT:  return { head.x + 1, head.y };
+      case BODY_DOWN:  return { head.x, head.y - 1 };
+      case BODY_UP:    return { head.x, head.y + 1 };
+    }
+    return head; // fallback
 }
 

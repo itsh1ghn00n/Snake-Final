@@ -24,6 +24,7 @@ public:
   Point getTail() const { return tail; }
   Point getPrevTail() const { return prevTail; }
   int getLength() const { return length; }
+  Point getNeck(uint8_t grid[26][24]) const;
   
   void setNewHead(Point newVal) { newHead = newVal; }
 

@@ -242,8 +242,6 @@ void drawFrame() {
     fps = frameCount * 1000.0 / (now - lastTime);
     frameCount = 0;
     lastTime = now;
-    //Serial.print("True FPS: ");
-    //Serial.println(fps, 1);
   }
 }
 
@@ -261,32 +259,17 @@ void drawSnake() {
   uint8_t (*snakeGrid)[24] = game.getSnakeGrid();
 
   Point head = s.getHead();
-  Point tail = s.getTail();
+  Point neck = s.getNeck(snakeGrid);
   Point prevTail = s.getPrevTail();
 
   // Draw Head
   drawCell(head.x, head.y, ST77XX_YELLOW);
-  Point cur = tail;
-  bool color = 0;
 
-  while (!(cur.x == head.x && cur.y == head.y)) {
-    uint8_t code = snakeGrid[cur.x][cur.y];
-    if (code == EMPTY)
-      break;
-    uint16_t c = 0;
-    if (color) { c = snakeColor; }
-    else { c = altSnakeColor; }
-    drawCell(cur.x, cur.y, c);
+  uint8_t neckDir = snakeGrid[neck.x][neck.y];
+  uint16_t bodyColor = (neckDir %2 == 0) ? snakeColor : altSnakeColor;
 
-    switch (code) {
-      case BODY_RIGHT: cur.x++; break;
-      case BODY_LEFT:  cur.x--; break;
-      case BODY_DOWN:  cur.y++; break;
-      case BODY_UP:    cur.y--; break;
-    }
+  drawCell(neck.x, neck.y, bodyColor);
 
-    color ^= 1;
-  }
   drawCell(prevTail.x, prevTail.y, getBoardColor(prevTail.x, prevTail.y)); // or background color
 }
 

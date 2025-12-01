@@ -287,7 +287,7 @@ void drawSnake() {
 
     color ^= 1;
   }
-  //drawCell(prevTail.x, prevTail.y, getBoardColor(prevTail.x, prevTail.y)); // or background color
+  drawCell(prevTail.x, prevTail.y, getBoardColor(prevTail.x, prevTail.y)); // or background color
 }
 
 void drawApple() {
@@ -336,13 +336,13 @@ void drawUI() {
     if (head.y < 10) lcd.print("0");
     lcd.print(head.y);
 
-    lcd.setCursor(245, 80); 
-    Point tail = game.getSnake().getTail();
-    if (tail.x < 10) lcd.print("0");
-    lcd.print(tail.x);
-    lcd.print(", ");
-    if (tail.y < 10) lcd.print("0");
-    lcd.print(tail.y);
+    //lcd.setCursor(245, 80); 
+    //Point tail = game.getSnake().getTail();
+    //if (tail.x < 10) lcd.print("0");
+    //lcd.print(tail.x);
+    //lcd.print(", ");
+    //if (tail.y < 10) lcd.print("0");
+    //lcd.print(tail.y);
     // Debug fps
     if (abs(fps - prevFps) >= 0.1f) // If the absolute change in fps is greater than 0.01, display
     {

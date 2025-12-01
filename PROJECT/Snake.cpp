@@ -22,28 +22,25 @@ void Snake::init(int x, int y, int len, uint8_t grid[26][24])
 
 void Snake::move(int dx, int dy, uint8_t grid[26][24])
 {
-  prevTail = tail;
-
   uint8_t code = encodeDirection(dx, dy);
+
+  grid[head.x][head.y] = code;
+
+  head.x += dx;
+  head.y += dy;
 
   grid[head.x][head.y] = code;
 
   // if not growing, remove old tail
   if (growCount > 0) {
-    Serial.println(growCount);
     growCount--;
     length++;
   }
   else {
+    prevTail = tail;
     updateTail(grid);
-
-    grid[tail.x][tail.y] = EMPTY;
+    grid[prevTail.x][prevTail.y] = EMPTY;
   }
-  // move head
-  head.x += dx;
-  head.y += dy;
-
-  grid[head.x][head.y] = code;
 
   // Flip color
   color ^= 1;
@@ -66,10 +63,10 @@ void Snake::updateTail(uint8_t grid[26][24])
     uint8_t code = grid[tail.x][tail.y];
     // Following from the tail and decoding
     switch(code) {
-        case BODY_RIGHT: tail.x--; break;
-        case BODY_LEFT:  tail.x++; break;
-        case BODY_DOWN:  tail.y--; break;
-        case BODY_UP:    tail.y++; break;
+        case BODY_RIGHT: tail.x++; break;
+        case BODY_LEFT:  tail.x--; break;
+        case BODY_DOWN:  tail.y++; break;
+        case BODY_UP:    tail.y--; break;
     }
 }
 

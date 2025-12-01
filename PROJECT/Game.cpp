@@ -63,15 +63,14 @@ void Game::update(int inputDirX, int inputDirY) {
     running = false;
     return;
   }
-
   // move
   snake.move(dirX, dirY, snakeGrid);
 
   // apple collision
   if (snake.getHead().x == apple.getPos().x && snake.getHead().y == apple.getPos().y) {
      
-    if (apple.getIsGolden()) { snake.grow(5); } 
-    else { snake.grow(1); }
+    if (apple.getIsGolden()) { snake.grow(50); } 
+    else { snake.grow(10); }
 
     apple.spawn(gridW, gridH, xOffset, yOffset, snakeGrid);
   }

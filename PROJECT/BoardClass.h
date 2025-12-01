@@ -8,21 +8,25 @@
 
 class board{
   private:
-  const int MAX_ROWS = 24;
-  const int MAX_COLS = 24;
-  static const int NUM_BYTES = 72;
 
   int col;
   int row;
-
-  uint8_t gridBitArray[NUM_BYTES];
+  
+  static const int MAX_BITS = 24 * 26;
+  static const int MAX_BYTES = (MAX_BITS + 7) / 8;
+  uint8_t gridBitArray[MAX_BYTES];
 
   int index(int c, int r) const { return r * col + c; }
+
   public:
     board(int col, int row);
 
-    uint8_t getBoardVal(int c, int r) const;
+    void clear();
+    bool getBoardVal(int c, int r) const;
     void setBoardVal(int c, int r, bool value);
+
+    int getCol() const { return col; }
+    int getRow() const { return row; }
   };
 
 

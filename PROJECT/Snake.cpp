@@ -1,39 +1,75 @@
+#pragma once
 #include "Snake.h"
 
-Snake::Snake() : length(3) {}
+Snake::Snake() : length(3), growCount(0), color(0) {}
 
-void Snake::init(int len) {
+void Snake::init(int x, int y, int len, uint8_t grid[26][24])
+{
+  head = {x, y};
+  tail = {(x - (len - 1)), y};
+  prevTail = tail;
   length = len;
-  for (int i = 0; i < length; ++i) {
-    body[i] = {5 - i, 5};
-  }
+  growCount = 0;
+  color = 0;
+
+  for(int iy = 0; iy < 24; iy++)
+        for(int ix = 0; ix < 26; ix++)
+            grid[ix][iy] = EMPTY;
+
+  for (int i = 0; i < len; i++)
+        grid[x - i][y] = BODY_RIGHT;
 }
 
-void Snake::move(int dirX, int dirY) {
-  //prevTail = body[length - 1];
-  for (int i = length - 1; i > 0; i--) {
-    body[i] = body[i - 1];
-  }
-  body[0].x += dirX;
-  body[0].y += dirY;
-}
+void Snake::move(int dx, int dy, uint8_t grid[26][24])
+{
+  prevTail = tail;
 
-void Snake::grow(int amount) {
-  for (int i = 0; i < amount && length < MAX_SIZE; i++) {
-    body[length] = body[length - 1];
+  uint8_t code = encodeDirection(dx, dy);
+
+  grid[head.x][head.y] = code;
+
+  // if not growing, remove old tail
+  if (growCount > 0) {
+    Serial.println(growCount);
+    growCount--;
     length++;
   }
-}
+  else {
+    updateTail(grid);
 
-bool Snake::isOnBody(int x, int y) const {
-  for (int i = 1; i < length; i++) {
-    if (body[i].x == x && body[i].y == y)
-      return true;
+    grid[tail.x][tail.y] = EMPTY;
   }
-  return false;
+  // move head
+  head.x += dx;
+  head.y += dy;
+
+  grid[head.x][head.y] = code;
+
+  // Flip color
+  color ^= 1;
 }
 
-void Snake::setLength(int newLen) {
-  body[length] = body[length - newLen];
-  length = newLen;
+void Snake::grow(int amount)
+{
+    growCount += amount;
 }
+
+uint8_t Snake::encodeDirection(int dx, int dy) { // 0, 1, 2, 3
+  if (dx == 1)  return BODY_RIGHT;
+  if (dx == -1) return BODY_LEFT;
+  if (dy == 1)  return BODY_DOWN;
+  return BODY_UP ; // dy = -1
+}
+
+void Snake::updateTail(uint8_t grid[26][24])
+{
+    uint8_t code = grid[tail.x][tail.y];
+    // Following from the tail and decoding
+    switch(code) {
+        case BODY_RIGHT: tail.x--; break;
+        case BODY_LEFT:  tail.x++; break;
+        case BODY_DOWN:  tail.y--; break;
+        case BODY_UP:    tail.y++; break;
+    }
+}
+

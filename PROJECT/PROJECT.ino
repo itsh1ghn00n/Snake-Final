@@ -10,13 +10,13 @@
 
 Adafruit_ST7789 lcd = Adafruit_ST7789(TFT_CS, TFT_DC, TFT_RST);
 
-const int GRID_W = 23; //30 Maybe
+const int GRID_W = 26; //30 Maybe
 const int GRID_H = 24; //22 Maybe
 const int CELL_SIZE = 10;
 const int joyPin1 = A0;
 const int joyPin2 = A1;
 
-Game game(GRID_W, GRID_H);
+Game game(GRID_W, GRID_H, 3, 0);
 
 int highScore = 0;
 const int EEPROM_HIGH_SCORE_ADDR = 200;
@@ -168,6 +168,7 @@ void loseGame() {
     lcd.print("New Highscore!");
   }
   // Display HighScore 
+  lcd.setTextSize(2);
   lcd.setCursor(30, 160); 
   lcd.setTextColor(ST77XX_GREEN, ST77XX_BLACK); 
   lcd.print("High Score: "); 
@@ -193,6 +194,7 @@ void winGame() {
     lcd.setCursor(30, 140);
     lcd.print("New Highscore!");
   }
+  lcd.setTextSize(2);
   lcd.setCursor(30, 160); 
   lcd.setTextColor(ST77XX_GREEN, ST77XX_BLACK); 
   lcd.print("High Score: "); 
@@ -246,35 +248,57 @@ void drawFrame() {
 }
 
 void drawBoard() {
-  int x_init = 4;
-  for (int x = 0; x <= GRID_W; ++x) {
-    for (int y = 0; y <= GRID_H; ++y) {
-      int drawX = x_init + x;
+  for (int x = 0; x < GRID_W; ++x) {
+    for (int y = 0; y < GRID_H; ++y) {
       uint16_t boardColor = getBoardColor(x, y);
-      drawCell(drawX, y, boardColor);
+      drawCell(x, y, boardColor);
     }
   }
 }
 
 void drawSnake() {
   const Snake& s = game.getSnake();
-  const board& b = game.getBoard();
+  uint8_t (*snakeGrid)[24] = game.getSnakeGrid();
 
   Point head = s.getHead();
-  drawCell(head.x, head.y, ST77XX_YELLOW);
-  Point neck = s.getSegment(1);
-  
-  uint8_t cellVal = b.getBoardVal(neck.x, neck.y);
-  uint16_t bodyColor = (cellVal == 0) ? snakeColor : altSnakeColor;
-  drawCell(neck.x, neck.y, bodyColor);
+  Point tail = s.getTail();
+  Point prevTail = s.getPrevTail();
 
-  Point tail = s.getPrevTail();
-  drawCell(tail.x, tail.y, getBoardColor(tail.x, tail.y));
+  // Draw Head
+  drawCell(head.x, head.y, ST77XX_YELLOW);
+  Point cur = tail;
+  bool color = 0;
+
+  while (!(cur.x == head.x && cur.y == head.y)) {
+    uint8_t code = snakeGrid[cur.x][cur.y];
+    if (code == EMPTY)
+      break;
+    uint16_t c = 0;
+    if (color) { c = snakeColor; }
+    else { c = altSnakeColor; }
+    drawCell(cur.x, cur.y, c);
+
+    switch (code) {
+      case BODY_RIGHT: cur.x++; break;
+      case BODY_LEFT:  cur.x--; break;
+      case BODY_DOWN:  cur.y++; break;
+      case BODY_UP:    cur.y--; break;
+    }
+
+    color ^= 1;
+  }
+  //drawCell(prevTail.x, prevTail.y, getBoardColor(prevTail.x, prevTail.y)); // or background color
 }
 
 void drawApple() {
-  Point a = game.getApple().getPos();
-  drawCell(a.x, a.y, ST77XX_RED);
+  Point apple = game.getApple().getPos();
+  uint16_t color;
+  if (game.getApple().getIsGolden()) {
+    color = ST77XX_YELLOW;
+  } else {
+    color = ST77XX_RED;
+  }
+  drawCell(apple.x, apple.y, color);
 }
 
 // DrawCell
@@ -282,7 +306,10 @@ void drawApple() {
 // It draws a rectangle of the color from the x, y to x,y * CELL_SIZE.
 // Primarily just an expansion on the built in fillRect() func from adafruit library
 void drawCell(int x, int y, uint16_t color) {
-  lcd.fillRect(x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE, color);
+  int sx = (x + game.getXOffset()) * CELL_SIZE;
+  int sy = (y + game.getYOffset()) * CELL_SIZE;
+
+  lcd.fillRect(sx, sy, CELL_SIZE, CELL_SIZE, color);
 }
 
 // DrawUI
@@ -309,6 +336,13 @@ void drawUI() {
     if (head.y < 10) lcd.print("0");
     lcd.print(head.y);
 
+    lcd.setCursor(245, 80); 
+    Point tail = game.getSnake().getTail();
+    if (tail.x < 10) lcd.print("0");
+    lcd.print(tail.x);
+    lcd.print(", ");
+    if (tail.y < 10) lcd.print("0");
+    lcd.print(tail.y);
     // Debug fps
     if (abs(fps - prevFps) >= 0.1f) // If the absolute change in fps is greater than 0.01, display
     {

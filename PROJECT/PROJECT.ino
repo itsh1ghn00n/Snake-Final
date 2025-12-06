@@ -129,12 +129,12 @@ void waitForStart() {
       lcd.setTextSize(3);
       lcd.setTextColor(ST77XX_RED, ST77XX_BLACK);
       lcd.setCursor(40, 150);
-      lcd.print("PRESS TO START");
+      lcd.print("MOVE TO START");
     } else {
       lcd.setTextSize(3);
       lcd.setTextColor(ST77XX_BLACK, ST77XX_BLACK); // erase text
       lcd.setCursor(40, 150);
-      lcd.print("PRESS TO START");
+      lcd.print("MOVE TO START");
     }
 
     visible = !visible;
@@ -300,11 +300,11 @@ void drawCell(int x, int y, uint16_t color) {
 // Solely draws ui while game.is_running is true
 void drawUI() {
   lcd.setTextColor(ST77XX_GREEN, ui_c); 
-  lcd.setTextSize(2);
-  
-  lcd.setCursor(250, 0); 
-  lcd.print("Score"); 
-  lcd.setCursor(270, 20); 
+  lcd.setTextSize(1);
+  lcd.setCursor(290, 0); 
+  lcd.print("Score:"); 
+  lcd.setTextSize(1.7);
+  lcd.setCursor(290, 10); 
   lcd.print(game.getScore());
 
   // Debug head position
@@ -347,11 +347,11 @@ void readJoystick(int& inputX, int& inputY) {
 
   inputX = 0; inputY = 0;
 
-  if (abs(xVal - 500) > abs(yVal - 500)) {
-    if (xVal > 500 + deadzone) inputX = -1;
+  if (abs(xVal - 512) > abs(yVal - 512)) {
+    if (xVal > 512 + deadzone) inputX = -1;
     else if (xVal < 512 - deadzone) inputX = 1;
   } else {
-    if (yVal > 500 + deadzone) inputY = -1;
+    if (yVal > 512 + deadzone) inputY = -1;
     else if (yVal < 512 - deadzone) inputY = 1;
   }
 }

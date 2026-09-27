@@ -22,7 +22,9 @@ This library is needed to run:
 
 https://github.com/adafruit/Adafruit-ST7735-Library
 
-Project Presentation: (https://docs.google.com/presentation/d/1HIrBqBPn5FDW4B5-vobNbtyyRJyoKy8mGZ3lnTzgyQM/edit?usp=sharing)
+Project Presentation: [Link](https://docs.google.com/presentation/d/1HIrBqBPn5FDW4B5-vobNbtyyRJyoKy8mGZ3lnTzgyQM/edit?usp=sharing)
+
+Project Writeup: [Link](https://docs.google.com/document/d/1Qz2opOksYUGOxfZy_Ftek9x8OJ4Hku0oKuq_BkEj--U/edit?tab=t.0)
 
 It can also just be added as a library through the Arduino IDE
 

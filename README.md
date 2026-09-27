@@ -22,6 +22,8 @@ This library is needed to run:
 
 https://github.com/adafruit/Adafruit-ST7735-Library
 
+Project Presentation: (https://docs.google.com/presentation/d/1HIrBqBPn5FDW4B5-vobNbtyyRJyoKy8mGZ3lnTzgyQM/edit?usp=sharing)
+
 It can also just be added as a library through the Arduino IDE
 
 The library name is "Adafruit ST7735 and ST7789 Library by Adafruit" on the library tab.
